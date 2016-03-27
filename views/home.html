@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="font-family: 'Catamaran', sans-serif; font-size:30px">teletutor</a>
+        </div>
+        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" ng-click="logout()">Log Out</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+    <h3>Your display name: </h3>
+    <input type="text" placeholder="" ng-model="user.displayName" style="font-size:30px" pu-elastic-input>
+    
+    <div class="row" ng-show="user.requesting">
+        <div class="col-md-2">
+        </div>
+        <div class="well col-md-8">
+            <h2>Waiting for response from <span style="font-weight:bold">{{users.$getRecord(user.requesting).displayName}}</span>...</h2>
+            <button class="btn btn-warning" ng-click="cancelRequest()">Cancel Request</button>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+    
+    <div class="row" ng-show="user.requestedBy">
+        <div class="col-md-2">
+        </div>
+        <div class="well col-md-8">
+            <h2><span style="font-weight:bold">{{users.$getRecord(user.requestedBy).displayName}}</span> wants to meet!</h2>
+            <button class="btn btn-default" ng-click="triggerSession(user.requestedBy)">Meet!</button>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+    
+    
+    <h1>  Users </h1>
+    
+    <h4 ng-repeat="other in users" ng-show="other.displayName!==user.displayName"><a ng-click="request(other.$id)">{{other.displayName}}</a></h4>
+</div>
