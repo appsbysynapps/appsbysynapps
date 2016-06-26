@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Teletutor</title>
     <link href='https://fonts.googleapis.com/css?family=Catamaran:600' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body ng-app="teletutor">
-      <ui-view></ui-view>
-      <script src= "script/angular.min.js"></script>
-      <script src= "script/firebase.js"></script>
-      <script src= "script/angular-ui-router.min.js"></script>
-      <script src= "script/angularfire.min.js"></script>
-      <script src= "script/angular-elastic-input.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-      
-      <script src= "script/script.js"></script>
-      <script src= "script/controllers.js"></script>
-      <script src= "script/services.js"></script>
-  </body>
+</head>
+
+<body ng-app="teletutor">
+    <ui-view></ui-view>
+    <script src="script/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAVYBS7QMGLNEgCotd1-9JZVKtQhoeTu0c",
+            authDomain: "teletutor.firebaseapp.com",
+            databaseURL: "https://teletutor.firebaseio.com",
+            storageBucket: "project-5159927373929656483.appspot.com",
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="script/angular.min.js"></script>
+    <script src="script/angular-ui-router.min.js"></script>
+    <script src="script/angularfire.min.js"></script>
+    <script src="script/angular-elastic-input.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="https://cdn.pubnub.com/pubnub-3.7.14.min.js"></script>
+    <script src="https://cdn.pubnub.com/webrtc/webrtc.js"></script>
+
+    <script src="script/script.js"></script>
+    <script src="script/controllers.js"></script>
+    <script src="script/services.js"></script>
+</body>
+
 </html>

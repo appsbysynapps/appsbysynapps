@@ -1,4 +1,8 @@
 <button style="btn btn-default" ng-click="exitSession()">Exit session</button>
-<div class="l-demo-container">
+<div id="vid-box"></div>
+<div id="vid-thumb"></div>
+<button style="btn btn-default" ng-click="makeCall()" id="call" ng-disabled="phoneNotReady">Start Video</button>
+
+<div>
     <canvas whiteboard id="drawing-canvas" width="1500" height="900"></canvas>
 </div>

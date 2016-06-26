@@ -8,8 +8,14 @@ angular.module('teletutor.controllers', [])
 
         $scope.logout = function () {
             Users.removeRequest(Auth.$getAuth().uid);
-            Auth.$unauth();
-            $state.go('login');
+            firebase.auth().signOut().then(function () {
+                // Sign-out successful.
+                $state.go('login');
+            }, function (error) {
+                // An error happened
+                console.log(error);
+            });
+
         };
 
         $scope.request = function (uid) {
@@ -18,7 +24,8 @@ angular.module('teletutor.controllers', [])
             sessionRef.on('value', function (snapshot) {
                 if (snapshot.val()) {
                     $state.go('board', {
-                        'sessionId': snapshot.val()
+                        'sessionId': snapshot.val(),
+                        'otherUid': uid,
                     });
                 }
             });
@@ -31,11 +38,41 @@ angular.module('teletutor.controllers', [])
         $scope.triggerSession = function (requesterUid) {
             var sessionId = Users.triggerSession(requesterUid);
             $state.go('board', {
-                'sessionId': sessionId
+                'sessionId': sessionId,
+                'otherUid': requesterUid,
             });
         }
     })
     .controller('BoardCtrl', function (FirebaseUrl, Users, Auth, $state, $scope, $stateParams) {
+        // video calling
+        $scope.phoneNotReady = true;
+
+        var phone = window.phone = PHONE({
+            number: Auth.$getAuth().uid, // listen on username line else Anonymous
+            publish_key: 'pub-c-2544a2f9-c98a-4820-ad84-4d65dadc9e73',
+            subscribe_key: 'sub-c-97f2f192-3aec-11e6-9c7c-0619f8945a4f',
+        });
+
+        phone.ready(function () {
+            $scope.phoneNotReady = false;
+        });
+
+        var video_out = document.getElementById("vid-box");
+
+        phone.receive(function (session) {
+            session.connected(function (session) {
+                video_out.appendChild(session.video);
+            });
+            session.ended(function (session) {
+                video_out.innerHTML = '';
+            });
+        });
+
+        $scope.makeCall = function () {
+            if (!window.phone) alert("Login First!");
+            else phone.dial($stateParams.otherUid);
+        }
+
         //Set up some globals
         var pixSize = 1,
             lastPoint = null,
@@ -110,13 +147,13 @@ angular.module('teletutor.controllers', [])
         myCanvas.ontouchstart = function () {
             touchDown = 1;
         };
-    
+
         myCanvas.addEventListener('touchstart', myCanvas.ontouchstart, false);
         myCanvas.ontouchcancel = myCanvas.ontouchend = function () {
             touchDown = 0;
             lastPoint = null;
         };
-        
+
         myCanvas.addEventListener('touchcancel', myCanvas.ontouchcancel, false);
         //Draw a line from the mouse's last position to its current position
         var drawLineOnTouchMove = function (e) {
@@ -142,7 +179,7 @@ angular.module('teletutor.controllers', [])
         };
         //$(myCanvas).touchmove(drawLineOnTouchMove);
         //$(myCanvas).touchdown(drawLineOnTouchMove);
-    
+
         myCanvas.addEventListener('touchmove', drawLineOnTouchMove, false);
         myCanvas.addEventListener('touchdown', drawLineOnTouchMove, false);
 
@@ -164,42 +201,34 @@ angular.module('teletutor.controllers', [])
         pixelDataRef.on('child_added', drawPixel);
         pixelDataRef.on('child_changed', drawPixel);
         pixelDataRef.on('child_removed', clearPixel);
-    
-        $scope.exitSession = function(){
+
+        $scope.exitSession = function () {
             Users.removeRequest();
             $state.go('home');
         }
     })
     .controller('AuthCtrl', function (FirebaseUrl, $state, $scope) {
         var authCtrl = this;
-        var ref = new Firebase(FirebaseUrl);
+        var ref = firebase.database().ref();
 
         authCtrl.newUser = function () {
-            ref.createUser({
-                email: $scope.email,
-                password: $scope.password
-            }, function (error, userData) {
-                if (error) {
-                    console.log("Error creating user:", error);
-                } else {
-                    console.log("Successfully created user account with uid:", userData.uid);
-                    ref.child("users/" + userData.uid + "/displayName").set(userData.uid);
-                }
+
+            firebase.auth().createUserWithEmailAndPassword($scope.email, $scope.password).catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorMessage);
             });
         };
 
         authCtrl.loginEmail = function () {
-            ref.authWithPassword({
-                email: $scope.email,
-                password: $scope.password
-            }, function (error, authData) {
-                if (error) {
-                    console.log("Login Failed!", error);
-                } else {
-                    console.log("Authenticated successfully with payload:", authData);
-                    $state.go('home');
-                }
+            firebase.auth().signInWithEmailAndPassword($scope.email, $scope.password).catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorMessage);
             });
+            $state.go('home');
         };
 
     });
