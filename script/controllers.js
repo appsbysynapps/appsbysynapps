@@ -20,7 +20,7 @@ angular.module('teletutor.controllers', [])
 
         $scope.request = function (uid) {
             Users.makeRequest(uid);
-            var sessionRef = new Firebase(FirebaseUrl + "/users/" + Auth.$getAuth().uid + "/session");
+            var sessionRef = firebase.database().ref("/users/"+ Auth.$getAuth().uid + "/session");
             sessionRef.on('value', function (snapshot) {
                 if (snapshot.val()) {
                     $state.go('board', {
