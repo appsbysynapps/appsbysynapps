@@ -52,6 +52,7 @@ angular.module('teletutor.controllers', [])
             number: Auth.$getAuth().uid, // listen on username line else Anonymous
             publish_key: 'pub-c-2544a2f9-c98a-4820-ad84-4d65dadc9e73',
             subscribe_key: 'sub-c-97f2f192-3aec-11e6-9c7c-0619f8945a4f',
+            ssl: (('https:' == document.location.protocol) ? true : false),
         });
 
         phone.ready(function () {
