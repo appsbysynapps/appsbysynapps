@@ -58,7 +58,7 @@ angular.module('teletutor.services', ['firebase'])
                 newSession.child("users").push().set({
                     'id': uid2
                 });
-                return newSession.key();
+                return newSession.key;
             }
         }
     })
