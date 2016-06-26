@@ -81,7 +81,7 @@ angular.module('teletutor.controllers', [])
 
         //Create a reference to the pixel data for our drawing.
         var sessionId = $stateParams.sessionId;
-        var pixelDataRef = new Firebase(FirebaseUrl + "/sessions/" + sessionId + "/pixelData");
+        var pixelDataRef = firebase.database().ref("/sessions/" + sessionId + "/pixelData");
 
         // Set up our canvas
         var myCanvas = document.getElementById('drawing-canvas');;
