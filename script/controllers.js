@@ -46,17 +46,18 @@ angular.module('teletutor.controllers', [])
     })
     .controller('BoardCtrl', function (FirebaseUrl, Users, Auth, $state, $scope, $stateParams) {
         // video calling
-        $scope.phoneNotReady = true;
-
+        
+        console.log(Auth.$getAuth().uid);
         var phone = window.phone = PHONE({
             number: Auth.$getAuth().uid, // listen on username line else Anonymous
             publish_key: 'pub-c-2544a2f9-c98a-4820-ad84-4d65dadc9e73',
             subscribe_key: 'sub-c-97f2f192-3aec-11e6-9c7c-0619f8945a4f',
-            ssl: (('https:' == document.location.protocol) ? true : false),
+            ssl: true,
         });
-
+        console.log(phone);
         phone.ready(function () {
             $scope.phoneNotReady = false;
+            console.log("I'm freaking ready!");
         });
 
         var video_out = document.getElementById("vid-box");
