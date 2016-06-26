@@ -1,6 +1,6 @@
 angular.module('teletutor.controllers', [])
     .controller('HomeCtrl', function (FirebaseUrl, $firebaseObject, Users, Auth, $state, $scope) {
-        //same
+        
         var homeCtrl = this;
 
         Users.profile().$bindTo($scope, "user");
