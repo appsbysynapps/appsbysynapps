@@ -188,7 +188,7 @@ angular.module('teletutor.controllers', [])
         // Add callbacks that are fired any time the pixel data changes and adjusts the canvas appropriately.
         // Note that child_added events will be fired for initial pixel data as well.
         var drawPixel = function (snapshot) {
-            var coords = snapshot.key().split(":");
+            var coords = snapshot.key.split(":");
             var coords2 = snapshot.val().split(":");
             myContext.beginPath();
             myContext.moveTo(coords[0], coords[1])
@@ -196,7 +196,7 @@ angular.module('teletutor.controllers', [])
             myContext.stroke();
         };
         var clearPixel = function (snapshot) {
-            var coords = snapshot.key().split(":");
+            var coords = snapshot.key.split(":");
             myContext.clearRect(parseInt(coords[0]) * pixSize, parseInt(coords[1]) * pixSize, pixSize, pixSize);
         };
         pixelDataRef.on('child_added', drawPixel);
