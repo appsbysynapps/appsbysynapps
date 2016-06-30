@@ -21,7 +21,7 @@ angular.module('teletutor.controllers', [])
 
         $scope.request = function (uid) {
             Users.makeRequest(uid);
-            var sessionRef = firebase.database().ref("/users/"+ Auth.$getAuth().uid + "/session");
+            var sessionRef = firebase.database().ref("/users/" + Auth.$getAuth().uid + "/session");
             sessionRef.on('value', function (snapshot) {
                 if (snapshot.val()) {
                     $state.go('board', {
@@ -46,40 +46,10 @@ angular.module('teletutor.controllers', [])
     })
     .controller('BoardCtrl', function (FirebaseUrl, Users, Auth, $state, $scope, $stateParams) {
         // video calling
-        
-        /*console.log(Auth.$getAuth().uid);
-        var phone = window.phone = PHONE({
-            number: Auth.$getAuth().uid, // listen on username line else Anonymous
-            publish_key: 'pub-c-2544a2f9-c98a-4820-ad84-4d65dadc9e73',
-            subscribe_key: 'sub-c-97f2f192-3aec-11e6-9c7c-0619f8945a4f',
-            ssl: true,
-        });
-        console.log(phone);
-        phone.ready(function () {
-            $scope.phoneNotReady = false;
-            console.log("I'm freaking ready!");
-        });
 
-        var video_out = document.getElementById("vid-box");
-
-        phone.receive(function (session) {
-            session.connected(function (session) {
-                video_out.appendChild(session.video);
-            });
-            session.ended(function (session) {
-                video_out.innerHTML = '';
-            });
-        });
-    
-        console.log($stateParams.otherUid);
-        
-
-        $scope.makeCall = function () {
-            if (!window.phone) alert("Login First!");
-            else phone.dial($stateParams.otherUid);
-        }*/
-    $scope.dialNumber = $stateParams.otherUid;
+        $scope.dialNumber = $stateParams.otherUid;
         $scope.phoneNotReady = true;
+
         //Set up some globals
         var pixSize = 1,
             lastPoint = null,
@@ -97,6 +67,18 @@ angular.module('teletutor.controllers', [])
             alert("You must use a browser that supports HTML5 Canvas to run this demo.");
             return;
         }
+
+        var canvasWidth = myContext.canvas.width;
+        var canvasHeight = myContext.canvas.height;
+
+        var elementWidth = $('#drawing-canvas').width();
+        var elementHeight = $('#drawing-canvas').height();
+
+        var widthScale = canvasWidth / elementWidth;
+        var heightScale = canvasHeight / elementHeight;
+
+        console.log(widthScale);
+        console.log(heightScale);
 
         myContext.lineCap = "round";
         myContext.strokeStyle = "#000000";
@@ -132,8 +114,8 @@ angular.module('teletutor.controllers', [])
 
             // Bresenham's line algorithm. We use this to ensure smooth lines are drawn
             var offset = $('canvas').offset();
-            var x1 = Math.floor((e.pageX - offset.left) / pixSize - 1),
-                y1 = Math.floor((e.pageY - offset.top) / pixSize - 1);
+            var x1 = Math.floor(((e.pageX - offset.left) / pixSize - 1)*widthScale),
+                y1 = Math.floor(((e.pageY - offset.top) / pixSize - 1)*heightScale);
             var x0 = (lastPoint == null) ? x1 : lastPoint[0];
             var y0 = (lastPoint == null) ? y1 : lastPoint[1];
 
@@ -170,8 +152,8 @@ angular.module('teletutor.controllers', [])
 
             // Bresenham's line algorithm. We use this to ensure smooth lines are drawn
             var offset = $('canvas').offset();
-            var x1 = Math.floor((e.pageX - offset.left) / pixSize - 1),
-                y1 = Math.floor((e.pageY - offset.top) / pixSize - 1);
+            var x1 = Math.floor(((e.pageX - offset.left) / pixSize - 1)*widthScale),
+                y1 = Math.floor(((e.pageY - offset.top) / pixSize - 1)*heightScale);
             var x0 = (lastPoint == null) ? x1 : lastPoint[0];
             var y0 = (lastPoint == null) ? y1 : lastPoint[1];
 

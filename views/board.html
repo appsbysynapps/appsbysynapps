@@ -1,9 +1,31 @@
-<button style="btn btn-default" ng-click="exitSession()">Exit session</button>
-<div id="vid-box" webrtc-video changeOnReady = "phoneNotReady"></div>
-<div id="vid-thumb"></div>
-<button style="btn btn-default" ng-click="makeCall()" id="call" ng-disabled="phoneNotReady">Start Video</button>
-<p>{{testmsg}}</p>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="font-family: 'Catamaran', sans-serif; font-size:30px">teletutor</a>
+        </div>
 
-<div>
-    <canvas whiteboard id="drawing-canvas" width="1500" height="900"></canvas>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button class="btn btn-danger navbar-btn" ng-click="exitSession()">Exit session</button>></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<div style="padding-top:60px"> <!--fixed navbar compensation-->
+    <div class="col-sm-10">
+        <div>
+            <canvas whiteboard id="drawing-canvas" width="1000" height="800" style="width:100%"></canvas>
+        </div>
+    </div>
+
+    <div class="col-sm-2 col-sm-offset-10" style="position:fixed;padding-top:20px;background-color:#f2f2f2">
+        <div id="vid-box" webrtc-video changeOnReady="phoneNotReady"></div>
+        <div id="vid-thumb"></div>
+        <button class="btn btn-info" ng-click="makeCall()" id="call" ng-disabled="phoneNotReady">Start Video</button>
+    </div>
 </div>
