@@ -72,12 +72,13 @@ angular.module('teletutor.controllers', [])
         });
     
         console.log($stateParams.otherUid);
-        $scope.dialNumber = $stateParams.otherUid;
+        
 
         $scope.makeCall = function () {
             if (!window.phone) alert("Login First!");
             else phone.dial($stateParams.otherUid);
         }*/
+    $scope.dialNumber = $stateParams.otherUid;
         $scope.phoneNotReady = true;
         //Set up some globals
         var pixSize = 1,
