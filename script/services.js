@@ -89,9 +89,11 @@ angular.module('teletutor.services', ['firebase'])
                     session.connected(function (session) {
                         
                         $(elem).append(session.video);
+                        $('#vid-thumb').append(phone.video);
                     });
                     session.ended(function (session) {
                         $(elem).innerHTML = '';
+                        $('#vid-thumb').innerHTML = '';
 
                     });
                 });
