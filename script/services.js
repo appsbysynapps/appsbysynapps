@@ -108,6 +108,7 @@ angular.module('teletutor.services', ['firebase'])
                 }
                 
                 scope.endCall = function(){
+                    aleer("this happened!");
                     $window.phone.hangup();
                 }
             }
