@@ -1,4 +1,4 @@
-angular.module('teletutor.directives', ['firebase, teletutor.services'])
+angular.module('teletutor.directives', ['firebase, Auth'])
     .directive('webrtc-video', ['$scope', '$window'
         Auth,
         function ($scope, $window, Auth) {
