@@ -94,6 +94,11 @@ angular.module('teletutor.services', ['firebase'])
                         $(session.video).css('width', '100%');
                         $('#vid-thumb').append(phone.video);
                         $(phone.video).css('width', '100%');
+                        
+                        scope.endCall = function(){
+                            alert("this happened!");
+                            session.hangup();
+                        }
                     });
                     session.ended(function (session) {
                         $(elem).innerHTML = '';
@@ -107,10 +112,11 @@ angular.module('teletutor.services', ['firebase'])
                     else $window.phone.dial(scope.dialNumber);
                 }
                 
+                /*
                 scope.endCall = function(){
                     alert("this happened!");
                     $window.phone.hangup();
-                }
+                }*/
             }
         };
     }])
