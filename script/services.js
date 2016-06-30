@@ -73,7 +73,10 @@ angular.module('teletutor.services', ['firebase'])
                     number: Auth.$getAuth().uid, // listen on username line else Anonymous
                     publish_key: 'pub-c-2544a2f9-c98a-4820-ad84-4d65dadc9e73',
                     subscribe_key: 'sub-c-97f2f192-3aec-11e6-9c7c-0619f8945a4f',
-                    media: {audio:true, video:true},
+                    media: {
+                        audio: true,
+                        video: true
+                    },
                     ssl: true,
                 });
 
@@ -81,13 +84,13 @@ angular.module('teletutor.services', ['firebase'])
                     scope.phoneNotReady = false;
                     scope.$apply();
                 });
-                
+
                 console.log(elem);
-                
+
 
                 phone.receive(function (session) {
                     session.connected(function (session) {
-                        
+
                         $(elem).append(session.video);
                         $('#vid-thumb').append(phone.video);
                     });
@@ -97,11 +100,26 @@ angular.module('teletutor.services', ['firebase'])
 
                     });
                 });
-                
+
                 scope.makeCall = function () {
                     if (!($window.phone)) alert("Login First!");
                     else $window.phone.dial(scope.dialNumber);
                 }
             }
         };
-    }]);
+    }])
+    .directive('fullHeight', function ($window) {
+
+        return {
+            restrict: 'A',
+
+            link: function (scope, elem, attrs) {
+
+                var winHeight = $window.innerHeight;
+
+                var headerHeight = attrs.banner ? attrs.banner : 0;
+
+                elem.css('height', winHeight - headerHeight + 'px');
+            }
+        };
+    });;
