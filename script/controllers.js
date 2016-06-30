@@ -47,7 +47,7 @@ angular.module('teletutor.controllers', [])
     .controller('BoardCtrl', function (FirebaseUrl, Users, Auth, $state, $scope, $stateParams) {
         // video calling
         
-        console.log(Auth.$getAuth().uid);
+        /*console.log(Auth.$getAuth().uid);
         var phone = window.phone = PHONE({
             number: Auth.$getAuth().uid, // listen on username line else Anonymous
             publish_key: 'pub-c-2544a2f9-c98a-4820-ad84-4d65dadc9e73',
@@ -70,11 +70,14 @@ angular.module('teletutor.controllers', [])
                 video_out.innerHTML = '';
             });
         });
+    
+        console.log($stateParams.otherUid);
+        $scope.dialNumber = $stateParams.otherUid;
 
         $scope.makeCall = function () {
             if (!window.phone) alert("Login First!");
             else phone.dial($stateParams.otherUid);
-        }
+        }*/
 
         //Set up some globals
         var pixSize = 1,
