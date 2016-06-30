@@ -16,16 +16,31 @@
     <!-- /.container-fluid -->
 </nav>
 
-<div style="padding-top:60px"> <!--fixed navbar compensation-->
+<div style="padding-top:60px">
+    <!--fixed navbar compensation-->
     <div class="col-sm-10">
         <div style="overflow-y:auto" class="scrollable" full-height banner="60">
             <canvas whiteboard id="drawing-canvas" width="1000" height="800" style="width:100%"></canvas>
         </div>
     </div>
 
-    <div class="col-sm-2 col-sm-offset-10" style="position:fixed;padding-top:20px;background-color:#f2f2f2" full-height banner="60">
-        <div id="vid-box" webrtc-video changeOnReady="phoneNotReady"></div>
-        <div id="vid-thumb"></div>
-        <button class="btn btn-info" ng-click="makeCall()" id="call" ng-disabled="phoneNotReady">Start Video</button>
+    <div class="col-sm-2 col-sm-offset-10 whiteboard-sidebar" full-height banner="60">
+        <div class="sameSizeInFlex">
+            <div id="vid-box" webrtc-video changeOnReady="phoneNotReady"></div>
+            <div id="vid-thumb"></div>
+            <button class="btn btn-info" ng-click="makeCall()" id="call" ng-disabled="phoneNotReady">Start Video</button>
+            <h4>Chat</h4>
+        </div>
+        <div class="chatbox-container">
+                <div class="chatbox">
+                    <div ng-repeat="msg in messages|orderBy:$index:true" class=sameSizeInFlex>
+                        <h6><b>{{msg.name}}</b></h6>
+                        <p>{{msg.message}}</p>
+                    </div>
+                </div>
+                <div class="sameSizeInFlex">
+                    <input type="text" ng-keyup="sendMessage($event)" style="width:100%" placeholder="Type message..." ng-model="message">
+                </div>
+        </div>
     </div>
 </div>

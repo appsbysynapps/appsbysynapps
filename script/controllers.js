@@ -44,7 +44,7 @@ angular.module('teletutor.controllers', [])
             });
         }
     })
-    .controller('BoardCtrl', function (FirebaseUrl, Users, Auth, $state, $scope, $stateParams) {
+    .controller('BoardCtrl', function (FirebaseUrl, Users, Sessions, Auth, $state, $scope, $stateParams) {
         // video calling
 
         $scope.dialNumber = $stateParams.otherUid;
@@ -114,8 +114,8 @@ angular.module('teletutor.controllers', [])
 
             // Bresenham's line algorithm. We use this to ensure smooth lines are drawn
             var offset = $('canvas').offset();
-            var x1 = Math.floor(((e.pageX - offset.left) / pixSize - 1)*widthScale),
-                y1 = Math.floor(((e.pageY - offset.top) / pixSize - 1)*heightScale);
+            var x1 = Math.floor(((e.pageX - offset.left) / pixSize - 1) * widthScale),
+                y1 = Math.floor(((e.pageY - offset.top) / pixSize - 1) * heightScale);
             var x0 = (lastPoint == null) ? x1 : lastPoint[0];
             var y0 = (lastPoint == null) ? y1 : lastPoint[1];
 
@@ -152,8 +152,8 @@ angular.module('teletutor.controllers', [])
 
             // Bresenham's line algorithm. We use this to ensure smooth lines are drawn
             var offset = $('canvas').offset();
-            var x1 = Math.floor(((e.pageX - offset.left) / pixSize - 1)*widthScale),
-                y1 = Math.floor(((e.pageY - offset.top) / pixSize - 1)*heightScale);
+            var x1 = Math.floor(((e.pageX - offset.left) / pixSize - 1) * widthScale),
+                y1 = Math.floor(((e.pageY - offset.top) / pixSize - 1) * heightScale);
             var x0 = (lastPoint == null) ? x1 : lastPoint[0];
             var y0 = (lastPoint == null) ? y1 : lastPoint[1];
 
@@ -194,6 +194,23 @@ angular.module('teletutor.controllers', [])
         $scope.exitSession = function () {
             Users.removeRequest();
             $state.go('home');
+        }
+
+        //sending messages
+        $scope.messages = Sessions.getMessages(sessionId + '');
+        $scope.username = Users.getMyDisplayName().then(function (snapshot) {
+            $scope.username = snapshot.val().displayName;
+        });
+
+        $scope.sendMessage = function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                $scope.messages.$add({
+                    name: $scope.username,
+                    message: $scope.message
+                });
+                $scope.message = '';
+            }
         }
     })
     .controller('AuthCtrl', function (FirebaseUrl, $state, $scope) {

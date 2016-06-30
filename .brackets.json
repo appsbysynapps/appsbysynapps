@@ -1,6 +1,7 @@
 {
     "jscodehints.detectedExclusions": [
         "/Users/matthew/OneDrive/Synapps/teletutor-web/script/services.js",
-        "/Users/matthew/OneDrive/Synapps/teletutor-web/script/script.js"
+        "/Users/matthew/OneDrive/Synapps/teletutor-web/script/script.js",
+        "/Users/matthew/OneDrive/Synapps/teletutor-web/script/firebase.js"
     ]
 }

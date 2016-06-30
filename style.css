@@ -1,0 +1,32 @@
+/* WHITEBOARD STUFF */
+
+.chatbox {
+    flex: 1 1 auto;
+    background-color: #e6e6e6;
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column;
+    flex-direction: column-reverse;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.chatbox-container {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.sameSizeInFlex {
+    flex: 0 1 auto;
+}
+
+.whiteboard-sidebar {
+    position: fixed;
+    padding-top: 20px;
+    background-color: #f2f2f2;
+    display: flex;
+    flex-flow: column;
+}

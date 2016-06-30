@@ -17,7 +17,10 @@ angular.module('teletutor.services', ['firebase'])
                 return $firebaseArray(ref);
             },
             "getDisplayName": function (uid) {
-                return $firebaseObject(ref.child(uid).child(displayName));
+                return $firebaseObject(ref.child(uid).child("displayName"));
+            },
+            "getMyDisplayName": function () {
+                return userRef.once('value');
             },
             "makeRequest": function (otheruid) {
                 requestingUid = otheruid;
@@ -59,6 +62,10 @@ angular.module('teletutor.services', ['firebase'])
                     'id': uid2
                 });
                 return newSession.key;
+            },
+            "getMessages": function (id) {
+                var messages = $firebaseArray(sessionRef.child(id).child("messages"));
+                return messages;
             }
         }
     })
@@ -94,11 +101,6 @@ angular.module('teletutor.services', ['firebase'])
                         $(session.video).css('width', '100%');
                         $('#vid-thumb').append(phone.video);
                         $(phone.video).css('width', '100%');
-                        
-                        scope.endCall = function(){
-                            alert("this happened!");
-                            session.hangup();
-                        }
                     });
                     session.ended(function (session) {
                         $(elem).innerHTML = '';
@@ -111,12 +113,10 @@ angular.module('teletutor.services', ['firebase'])
                     if (!($window.phone)) alert("Login First!");
                     else $window.phone.dial(scope.dialNumber);
                 }
-                
-                /*
-                scope.endCall = function(){
-                    alert("this happened!");
+
+                scope.endCall = function () {
                     $window.phone.hangup();
-                }*/
+                }
             }
         };
     }])
