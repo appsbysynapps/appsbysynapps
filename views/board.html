@@ -1,7 +1,8 @@
 <button style="btn btn-default" ng-click="exitSession()">Exit session</button>
-<div id="vid-box" webrtc-video></div>
+<div id="vid-box" webrtc-video changeOnReady = "phoneNotReady"></div>
 <div id="vid-thumb"></div>
-<button style="btn btn-default" ng-click="makeCall()" id="call">Start Video</button>
+<button style="btn btn-default" ng-click="makeCall()" id="call" ng-disabled="phoneNotReady">Start Video</button>
+<p>{{testmsg}}</p>
 
 <div>
     <canvas whiteboard id="drawing-canvas" width="1500" height="900"></canvas>

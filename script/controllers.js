@@ -78,7 +78,8 @@ angular.module('teletutor.controllers', [])
             if (!window.phone) alert("Login First!");
             else phone.dial($stateParams.otherUid);
         }*/
-
+        $scope.phoneNotReady = true;
+        $scope.testmsg = "lolol";
         //Set up some globals
         var pixSize = 1,
             lastPoint = null,

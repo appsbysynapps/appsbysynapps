@@ -63,10 +63,12 @@ angular.module('teletutor.services', ['firebase'])
         }
     })
     .constant('FirebaseUrl', 'https://teletutor.firebaseio.com/')
-    .directive('webrtc-video', ['$scope', '$window', 'Auth', function ($scope, $window, Auth) {
+    .directive('webrtcVideo', ['$window', 'Auth', function ($window, Auth) {
         return {
             restrict: 'A',
-            link: function ($scope, elem, attrs) {
+            scope: false,
+            link: function (scope, elem, attrs) {
+                console.log('something happening!!');
                 var phone = $window.phone = PHONE({
                     number: Auth.$getAuth().uid, // listen on username line else Anonymous
                     publish_key: 'pub-c-2544a2f9-c98a-4820-ad84-4d65dadc9e73',
@@ -75,8 +77,8 @@ angular.module('teletutor.services', ['firebase'])
                 });
 
                 phone.ready(function () {
-                    $scope.phoneNotReady = false;
-                    console.log("I'm freaking ready!");
+                    scope.phoneNotReady = false;
+                    scope.$apply();
                 });
 
                 phone.receive(function (session) {
@@ -88,11 +90,10 @@ angular.module('teletutor.services', ['firebase'])
 
                     });
                 });
-            },
-            controller: function ($scope, $element, $window) {
-                $scope.makeCall = function () {
+                
+                scope.makeCall = function () {
                     if (!($window.phone)) alert("Login First!");
-                    else $window.phone.dial($scope.dialNumber);
+                    else $window.phone.dial(scope.dialNumber);
                 }
             }
         };
