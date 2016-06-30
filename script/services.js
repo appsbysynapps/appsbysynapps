@@ -80,13 +80,17 @@ angular.module('teletutor.services', ['firebase'])
                     scope.phoneNotReady = false;
                     scope.$apply();
                 });
+                
+                console.log(elem);
+                
 
                 phone.receive(function (session) {
                     session.connected(function (session) {
-                        angular.element(elem).appendChild(session.video);
+                        
+                        $(elem).append(session.video);
                     });
                     session.ended(function (session) {
-                        angular.element(elem).innerHTML = '';
+                        $(elem).innerHTML = '';
 
                     });
                 });
