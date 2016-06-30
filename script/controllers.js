@@ -193,6 +193,7 @@ angular.module('teletutor.controllers', [])
 
         $scope.exitSession = function () {
             Users.removeRequest();
+            $scope.endCall();
             $state.go('home');
         }
     })

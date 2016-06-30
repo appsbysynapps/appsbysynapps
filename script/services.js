@@ -85,14 +85,15 @@ angular.module('teletutor.services', ['firebase'])
                     scope.$apply();
                 });
 
-                console.log(elem);
 
 
                 phone.receive(function (session) {
                     session.connected(function (session) {
 
                         $(elem).append(session.video);
+                        session.video.css('width', '100%');
                         $('#vid-thumb').append(phone.video);
+                        session.video.css('width', '100%');
                     });
                     session.ended(function (session) {
                         $(elem).innerHTML = '';
@@ -104,6 +105,10 @@ angular.module('teletutor.services', ['firebase'])
                 scope.makeCall = function () {
                     if (!($window.phone)) alert("Login First!");
                     else $window.phone.dial(scope.dialNumber);
+                }
+                
+                scope.endCall = function(){
+                    phone.hangup();
                 }
             }
         };
