@@ -63,7 +63,7 @@ angular.module('teletutor.services', ['firebase'])
         }
     })
     .constant('FirebaseUrl', 'https://teletutor.firebaseio.com/')
-    .directive('webrtc-video', ['$scope', '$window', Auth, function ($scope, $window, Auth) {
+    .directive('webrtc-video', ['$scope', '$window', 'Auth', function ($scope, $window, Auth) {
         return {
             restrict: 'A',
             link: function ($scope, elem, attrs) {
@@ -95,5 +95,5 @@ angular.module('teletutor.services', ['firebase'])
                     else $window.phone.dial($scope.dialNumber);
                 }
             }
-        },
+        };
     }]);
