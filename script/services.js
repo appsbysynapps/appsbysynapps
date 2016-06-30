@@ -83,10 +83,10 @@ angular.module('teletutor.services', ['firebase'])
 
                 phone.receive(function (session) {
                     session.connected(function (session) {
-                        $(elem).appendChild(session.video);
+                        angular.element(elem).appendChild(session.video);
                     });
                     session.ended(function (session) {
-                        $(elem).innerHTML = '';
+                        angular.element(elem).innerHTML = '';
 
                     });
                 });
